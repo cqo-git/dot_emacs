@@ -1,0 +1,8 @@
+
+
+auto-save-list/
+*~
+history
+eln-cache/
+straight/
+org-roam.db

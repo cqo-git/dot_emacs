@@ -2,7 +2,9 @@
 
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
-      
+
+;; map Esc to Ctrl-g?
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;; revert dired and other buffers
 (customize-set-variable 'global-auto-revert-non-file-buffers t)

@@ -22,7 +22,10 @@
 
 ;; Load settings per platform
 (cond
+ ;; macos
  ((equal window-system 'ns) (require 'macos-config))
+ ;; Linux X11
+ ((equal window-system 'x) (require 'linux-config)) 
  (t (require 'terminal-config)))
 
 
@@ -63,6 +66,17 @@
                         :files (:defaults)))
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; Which key, helps with finding key prefixes etc.
+(straight-use-package '(which-key
+                        :type git
+                        :flavor melpa
+                        :host github
+                        :repo "justbur/emacs-which-key"))
+(which-key-mode)
+(setq ido-everywhere t)
+(setq ido-enable-flex-matching t)
+(ido-mode t)
+
 ;; common lisp
 (straight-use-package '(sly
                         :type git
@@ -72,7 +86,7 @@
                         :host github :repo "joaotavora/sly"))
 
 
-
+;;;;; Org mode setup
 (straight-use-package '(org
                         :type git
                         :repo "https://git.savannah.gnu.org/git/emacs/org-mode.git"
@@ -82,9 +96,42 @@
                         :build (:not autoloads)
                         :files (:defaults "lisp/*.el" ("etc/styles/" "etc/styles/*"))))
 
+
 (straight-use-package '(org-bullets
                         :type git
                         :flavor melpa
                         :host github
                         :repo "integral-dw/org-bullets"))
+
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+(straight-use-package '(org-roam
+                        :type git
+                        :flavor melpa
+                        :files (:defaults "extensions/*" "org-roam-pkg.el")
+                        :host github
+                        :repo "org-roam/org-roam"))
+
+;; org roam keybindings
+(setq org-roam-directory (file-truename "~/org/roam"))
+(setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+(org-roam-db-autosync-mode)
+
+
+(global-set-key (kbd "C-c n") 'my-org-roam)
+(defalias 'my-org-roam
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "l") 'org-roam-buffer-toggle)
+    (define-key map (kbd "f") 'org-roam-node-find)
+    (define-key map (kbd "g") 'org-roam-graph)
+    (define-key map (kbd "i") 'org-roam-node-insert)
+    (define-key map (kbd "c") 'org-roam-capture)
+    (define-key map (kbd "j") 'org-roam-dailies-capture-today)
+    map))
+
+;;; End Org mode setup
+
+;;; Magit
+(straight-use-package 'magit)
+
+
