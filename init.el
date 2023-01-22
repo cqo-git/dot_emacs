@@ -3,6 +3,9 @@
 ;; Add modules folder
 (add-to-list 'load-path (expand-file-name "modules/" user-emacs-directory))
 
+;; Load default settings
+(require 'default-settings)
+
 ;; Installing straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -16,9 +19,6 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
-
-;; Load default settings
-(require 'default-settings)
 
 ;; Load settings per platform
 (cond
@@ -85,6 +85,18 @@
                                           (:exclude "sly-autoloads.el") "sly-pkg.el")
                         :host github :repo "joaotavora/sly"))
 
+;; use roswell's sbcl as the default lisp
+(setq inferior-lisp-program "ros run -- --dynamic-space-size 8192")
+
+;; setup autocomplete for sly
+(straight-use-package '(ac-sly :type git :flavor melpa :host github :repo "qoocku/ac-sly"))
+;; setup sly ac after loading sly
+(add-hook 'sly-mode-hook 'set-up-sly-ac)
+(eval-after-load 'auto-complete
+  '(add-to-list 'ac-modes 'sly-mrepl-mode))
+
+;;; end lisp
+
 
 ;;;;; Org mode setup
 (straight-use-package '(org
@@ -117,7 +129,6 @@
 (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
 (org-roam-db-autosync-mode)
 
-
 (global-set-key (kbd "C-c n") 'my-org-roam)
 (defalias 'my-org-roam
   (let ((map (make-sparse-keymap)))
@@ -134,4 +145,30 @@
 ;;; Magit
 (straight-use-package 'magit)
 
+
+;;; vterm
+(straight-use-package '(vterm
+                        :type git
+                        :flavor melpa
+                        :files ("CMakeLists.txt"
+                                "elisp.c"
+                                "elisp.h"
+                                "emacs-module.h"
+                                "etc"
+                                "utf8.c"
+                                "utf8.h"
+                                "vterm.el"
+                                "vterm-module.c"
+                                "vterm-module.h"
+                                "vterm-pkg.el")
+                        :host github
+                        :repo "akermu/emacs-libvterm"))
+
+;; Open keybindings
+(global-set-key (kbd "C-c o") 'my-open)
+(defalias 'my-open
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "t") 'vterm)
+    (define-key map (kbd "e") 'eshell)
+    map))
 

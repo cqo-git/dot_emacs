@@ -1,8 +1,9 @@
-
-
-auto-save-list/
 *~
+auto-save-list/
 history
 eln-cache/
 straight/
 org-roam.db
+ido.last
+transient
+custom.el
