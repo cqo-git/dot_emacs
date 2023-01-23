@@ -1,9 +1,6 @@
-*~
-auto-save-list/
-history
-eln-cache/
-straight/
-org-roam.db
-ido.last
-transient
-custom.el
+/*
+!.gitignore 
+!init.el
+!modules/
+
+*.el~
