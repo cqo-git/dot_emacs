@@ -73,9 +73,23 @@
                         :host github
                         :repo "justbur/emacs-which-key"))
 (which-key-mode)
+
+;; IDO TODO: find and alternative to this. 
 (setq ido-everywhere t)
 (setq ido-enable-flex-matching t)
 (ido-mode t)
+
+;; perspective
+(straight-use-package '(perspective
+                        :type git
+                        :flavor melpa
+                        :host github
+                        :repo "nex3/perspective-el"))
+
+(global-set-key (kbd "C-x C-b") 'persp-list-buffers)
+(global-set-key (kbd "C-x k") 'persp-kill-buffer*)
+(customize-set-variable 'persp-mode-prefix-key (kbd "C-c p"))
+(persp-mode)
 
 ;; common lisp
 (straight-use-package '(sly
@@ -86,6 +100,7 @@
                         :host github :repo "joaotavora/sly"))
 
 ;; use roswell's sbcl as the default lisp
+(load (expand-file-name "~/.roswell/helper.el"))
 (setq inferior-lisp-program "ros run -- --dynamic-space-size 8192")
 
 ;; setup autocomplete for sly
