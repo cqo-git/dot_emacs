@@ -57,6 +57,12 @@
 ;; Display line numbers in prog mode
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
+;; Move windows better ?
+(global-set-key (kbd "C-c h") 'windmove-left)
+(global-set-key (kbd "C-c j") 'windmove-down)
+(global-set-key (kbd "C-c k") 'windmove-up)
+(global-set-key (kbd "C-c l") 'windmove-right)
+
 
 (provide 'default-settings)
 ;;; default-settings.el ends here

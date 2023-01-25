@@ -1,6 +1,7 @@
 ;;; packages.el -*- lexical-binding: t; -*-
 
 ;; perspective
+;; TODO: assign the number and name to the perspective
 (straight-use-package '(perspective
                         :type git
                         :flavor melpa
@@ -30,7 +31,7 @@
                         :type git
                         :host github
                         :repo "emacsattic/arc-dark-theme"))
-                      
+
 ;; Default Theme
 (load-theme 'arc-dark t)
 
@@ -68,6 +69,7 @@
 (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
 (global-set-key (kbd "C-c v") 'ivy-push-view)
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
+(global-set-key (kbd "C-c /") 'counsel-rg)
 
 ;; common lisp
 (straight-use-package '(sly
@@ -148,7 +150,25 @@
 ;;; Magit
 (straight-use-package 'magit)
 
+;;; vterm support
+(straight-use-package '(vterm
+                        :type git
+                        :flavor melpa
+                        :files ("CMakeLists.txt" "elisp.c" "elisp.h" "emacs-module.h" "etc" "utf8.c" "utf8.h" "vterm.el" "vterm-module.c" "vterm-module.h" "vterm-pkg.el")
+                        :host github
+                        :repo "akermu/emacs-libvterm"))
+(setq vterm-kill-buffer-on-exit t)
 
+(global-set-key (kbd "C-c o") 'my-open)
+(defalias 'my-open
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "e") 'eshell)
+    (define-key map (kbd "t") 'vterm-other-window)
+    map))
+
+
+;; eglot
+(straight-use-package '(eglot :type git :flavor melpa :host github :repo "joaotavora/eglot"))
 
 ;; provide 
 (provide 'packages)
