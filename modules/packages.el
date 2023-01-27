@@ -1,17 +1,13 @@
 ;;; packages.el -*- lexical-binding: t; -*-
 
-;; perspective
-;; TODO: assign the number and name to the perspective
-(straight-use-package '(perspective
+
+(straight-use-package '(projectile
                         :type git
                         :flavor melpa
                         :host github
-                        :repo "nex3/perspective-el"))
-
-(global-set-key (kbd "C-x C-b") 'persp-list-buffers)
-(global-set-key (kbd "C-x k") 'persp-kill-buffer*)
-(customize-set-variable 'persp-mode-prefix-key (kbd "C-c p"))
-(persp-mode)
+                        :repo "bbatsov/projectile"))
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 ;; Install Evil mode
 (straight-use-package 'evil)
@@ -104,7 +100,7 @@
 
 ;; always timestamp when a task was completed
 (setq org-log-done t)
-
+(setq org-startup-indented t)
 ;; todo states
 (setq org-todo-keywords
       '((sequence  "TODO(t)"
@@ -164,6 +160,7 @@
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "e") 'eshell)
     (define-key map (kbd "t") 'vterm-other-window)
+    (define-key map (kbd "T") 'vterm)
     map))
 
 
