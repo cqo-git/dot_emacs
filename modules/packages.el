@@ -13,6 +13,7 @@
 (straight-use-package 'evil)
 (setq evil-want-keybinding nil)
 (evil-mode 1)
+
 (straight-use-package 'evil-collection)
 (evil-collection-init)
 
@@ -63,6 +64,7 @@
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
 (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c v") 'ivy-push-view)
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
 (global-set-key (kbd "C-c /") 'counsel-rg)
@@ -166,6 +168,41 @@
 
 ;; eglot
 (straight-use-package '(eglot :type git :flavor melpa :host github :repo "joaotavora/eglot"))
+
+;; geiser
+(straight-use-package '(geiser
+                        :type git
+                        :flavor melpa
+                        :files ("elisp/*.el" "doc/dir" "doc/geiser.texi" "geiser-pkg.el")
+                        :host gitlab
+                        :repo "emacs-geiser/geiser"))
+
+(straight-use-package '(geiser-guile
+                        :type git
+                        :flavor melpa
+                        :files (:defaults ("src" "src/*") "geiser-guile-pkg.el")
+                        :host gitlab
+                        :repo "emacs-geiser/guile"))
+
+;; babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (shell . t)
+   (python . t)))
+
+
+;; skewer mode for live html
+(straight-use-package '(skewer-mode
+                        :type git
+                        :flavor melpa
+                        :files ("*.html" "*.js" "*.el" "skewer-mode-pkg.el")
+                        :host github
+                        :repo "skeeto/skewer-mode"))
+
+(add-hook 'js2-mode-hook 'skewer-mode)
+(add-hook 'css-mode-hook 'skewer-css-mode)
+(add-hook 'html-mode-hook 'skewer-html-mode)
 
 ;; provide 
 (provide 'packages)

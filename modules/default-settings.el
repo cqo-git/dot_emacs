@@ -63,6 +63,17 @@
 (global-set-key (kbd "C-c k") 'windmove-up)
 (global-set-key (kbd "C-c l") 'windmove-right)
 
+;; Switch windows
+(global-set-key (kbd "C-c H") 'windmove-swap-states-left)
+(global-set-key (kbd "C-c J") 'windmove-swap-states-down)
+(global-set-key (kbd "C-c K") 'windmove-swap-states-up)
+(global-set-key (kbd "C-c L") 'windmove-swap-states-right)
+
+;; no backup files
+(setq make-backup-files nil)
 
 (provide 'default-settings)
 ;;; default-settings.el ends here
+
+;; in org mode RET follows the link
+(setq org-return-follows-link t)
