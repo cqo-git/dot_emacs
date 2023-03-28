@@ -17,11 +17,6 @@
 (straight-use-package 'evil-collection)
 (evil-collection-init)
 
-;; Evil cursors for normal/insert/visual mode
-(setq evil-normal-state-cursor '(box "floralwhite")
-      evil-insert-state-cursor '(bar "floralwhite")
-      evil-visual-state-cursor '(hollow "orange"))
-
 
 ;; Install Arc-Dark-Theme
 (straight-use-package '(arc-dark-theme
@@ -29,8 +24,14 @@
                         :host github
                         :repo "emacsattic/arc-dark-theme"))
 
+(straight-use-package '(ef-themes
+                        :type git
+                        :host github
+                        :repo "emacs-straight/ef-themes"
+                        :files ("*" (:exclude ".git"))))
+
 ;; Default Theme
-(load-theme 'arc-dark t)
+(load-theme 'ef-day t)
 
 ;; auto completion?
 (straight-use-package `(company-mode
@@ -56,6 +57,7 @@
                                           (:exclude "ivy-hydra.el" "ivy-avy.el") "ivy-pkg.el")
                         :host github
                         :repo "abo-abo/swiper"))
+
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
 (ivy-mode 1)
@@ -69,6 +71,12 @@
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
 (global-set-key (kbd "C-c /") 'counsel-rg)
 
+
+;; counsel etags
+(straight-use-package '(counsel-etags :type git :flavor melpa :host github :repo "redguardtoo/counsel-etags"))
+(setq counsel-etags-update-interval 60)
+(push "build" counsel-etags-ignore-directories)
+
 ;; common lisp
 (straight-use-package '(sly
                         :type git
@@ -78,7 +86,7 @@
                         :host github :repo "joaotavora/sly"))
 
 ;; use roswell's sbcl as the default lisp
-(setq inferior-lisp-program "ros run -- --dynamic-space-size 8192")
+(setq inferior-lisp-program "sbcl --dynamic-space-size 8192")
 
 ;; setup autocomplete for sly
 (straight-use-package '(ac-sly :type git :flavor melpa :host github :repo "qoocku/ac-sly"))
@@ -183,6 +191,13 @@
                         :files (:defaults ("src" "src/*") "geiser-guile-pkg.el")
                         :host gitlab
                         :repo "emacs-geiser/guile"))
+;; Racket
+(straight-use-package '(racket-mode
+                        :type git
+                        :flavor melpa
+                        :files (:defaults "*.rkt" ("racket" "racket/*") (:exclude "racket/example/*" "racket/test/*") "racket-mode-pkg.el")
+                        :host github
+                        :repo "greghendershott/racket-mode"))
 
 ;; babel languages
 (org-babel-do-load-languages

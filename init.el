@@ -25,12 +25,14 @@
 
 ;; Load settings per platform
 (cond
- ;; macos
- ((equal window-system 'ns) (require 'macos-config))
- ;; Linux X11
- ((equal window-system 'x) (require 'linux-config))
- ;; terminal 
- (t (require 'terminal-config)))
+ ;; darwin
+ ((string-equal system-type "darwin")
+  (require 'macos-config))
+ ;; linux
+ ((string-equal system-type "gnu/linux")
+  (require 'linux-config))
+ ;; Terminal 
+ (t nil))
 
 ;; Load utility functions
 (require 'utility-functions)

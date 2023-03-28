@@ -72,8 +72,15 @@
 ;; no backup files
 (setq make-backup-files nil)
 
+;; in org mode RET follows the link
+(setq org-return-follows-link t)
+
+;; warnings
+(setq warning-minimum-level :error)
+
+;; disable auto-save
+(setq auto-save-default nil)
+
 (provide 'default-settings)
 ;;; default-settings.el ends here
 
-;; in org mode RET follows the link
-(setq org-return-follows-link t)
