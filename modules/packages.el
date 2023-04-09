@@ -75,7 +75,6 @@
 ;; counsel etags
 (straight-use-package '(counsel-etags :type git :flavor melpa :host github :repo "redguardtoo/counsel-etags"))
 (setq counsel-etags-update-interval 60)
-(push "build" counsel-etags-ignore-directories)
 
 ;; common lisp
 (straight-use-package '(sly
@@ -84,9 +83,8 @@
                         :files (:defaults "lib" "slynk" "contrib" "doc/images"
                                           (:exclude "sly-autoloads.el") "sly-pkg.el")
                         :host github :repo "joaotavora/sly"))
-
 ;; use roswell's sbcl as the default lisp
-(setq inferior-lisp-program "sbcl --dynamic-space-size 8192")
+(setq inferior-lisp-program "ros run -- --dynamic-space-size 8192")
 
 ;; setup autocomplete for sly
 (straight-use-package '(ac-sly :type git :flavor melpa :host github :repo "qoocku/ac-sly"))
@@ -94,6 +92,12 @@
 (add-hook 'sly-mode-hook 'set-up-sly-ac)
 (eval-after-load 'auto-complete
   '(add-to-list 'ac-modes 'sly-mrepl-mode))
+
+
+(load (expand-file-name "~/.roswell/helper.el"))
+(load (expand-file-name "~/.roswell/lisp/quicklisp/log4sly-setup.el"))
+(global-log4sly-mode 1)
+
 
 ;;; end lisp
 
@@ -218,6 +222,30 @@
 (add-hook 'js2-mode-hook 'skewer-mode)
 (add-hook 'css-mode-hook 'skewer-css-mode)
 (add-hook 'html-mode-hook 'skewer-html-mode)
+
+
+;; Highlight TODOs
+(straight-use-package '(hl-todo
+                        :type git
+                        :flavor melpa
+                        :host github
+                        :repo "tarsius/hl-todo"))
+(add-hook 'fundamental-mode 'hl-todo-mode)
+(setq hl-todo-highlight-punctuation ":")
+
+
+;; Perspectives
+(straight-use-package '(persp-mode
+                        :type git
+                        :flavor melpa
+                        :host github
+                        :repo "Bad-ptr/persp-mode.el"))
+(persp-mode)
+(straight-use-package '(persp-projectile
+                        :type git
+                        :flavor melpa
+                        :host github
+                        :repo "bbatsov/persp-projectile"))
 
 ;; provide 
 (provide 'packages)
