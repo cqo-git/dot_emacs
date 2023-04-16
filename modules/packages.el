@@ -10,6 +10,7 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 ;; Install Evil mode
+
 (straight-use-package 'evil)
 (setq evil-want-keybinding nil)
 (evil-mode 1)
@@ -31,7 +32,7 @@
                         :files ("*" (:exclude ".git"))))
 
 ;; Default Theme
-(load-theme 'ef-day t)
+(load-theme 'modus-operandi-tinted t)
 
 ;; auto completion?
 (straight-use-package `(company-mode
@@ -95,8 +96,6 @@
 
 
 (load (expand-file-name "~/.roswell/helper.el"))
-(load (expand-file-name "~/.roswell/lisp/quicklisp/log4sly-setup.el"))
-(global-log4sly-mode 1)
 
 
 ;;; end lisp
@@ -241,11 +240,6 @@
                         :host github
                         :repo "Bad-ptr/persp-mode.el"))
 (persp-mode)
-(straight-use-package '(persp-projectile
-                        :type git
-                        :flavor melpa
-                        :host github
-                        :repo "bbatsov/persp-projectile"))
 
 ;; provide 
 (provide 'packages)

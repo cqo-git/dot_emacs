@@ -83,4 +83,3 @@
 
 (provide 'default-settings)
 ;;; default-settings.el ends here
-

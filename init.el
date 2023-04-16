@@ -3,6 +3,7 @@
 ;; Add modules folder
 (add-to-list 'load-path (expand-file-name "modules/" user-emacs-directory))
 
+
 ;; Load default settings
 (require 'default-settings)
 
@@ -20,9 +21,6 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; install packages with general configuration
-(require 'packages)
-
 ;; Load settings per platform
 (cond
  ;; darwin
@@ -33,6 +31,10 @@
   (require 'linux-config))
  ;; Terminal 
  (t nil))
+
+;; install packages with general configuration
+(require 'packages)
+
 
 ;; Load utility functions
 (require 'utility-functions)
