@@ -131,6 +131,11 @@
                    "|"
                    "DONE(d)"
                    "CANCELED(c)")))
+(setq org-todo-keyword-faces
+      '(("TODO" . "IndianRed")
+        ("STARTED" . "orange3")
+        ("CANCELED" . "SlateGrey")
+        ("DONE" . "SpringGreen4")))
 
 (straight-use-package '(org-bullets
                         :type git
