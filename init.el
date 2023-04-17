@@ -36,7 +36,3 @@
 (require 'packages)
 
 
-;; Load utility functions
-(require 'utility-functions)
-
-

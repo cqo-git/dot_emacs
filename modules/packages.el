@@ -1,14 +1,6 @@
 ;;; packages.el -*- lexical-binding: t; -*-
 
 
-(straight-use-package '(projectile
-                        :type git
-                        :flavor melpa
-                        :host github
-                        :repo "bbatsov/projectile"))
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-
 ;; Install Evil mode
 
 (straight-use-package 'evil)
@@ -30,6 +22,12 @@
                         :host github
                         :repo "emacs-straight/ef-themes"
                         :files ("*" (:exclude ".git"))))
+
+(straight-use-package '(modus-themes
+                        :type git
+                        :flavor melpa
+                        :host sourcehut
+                        :repo "protesilaos/modus-themes"))
 
 ;; Default Theme
 (load-theme 'modus-operandi-tinted t)
@@ -66,8 +64,6 @@
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
-(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c v") 'ivy-push-view)
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
 (global-set-key (kbd "C-c /") 'counsel-rg)
@@ -84,6 +80,20 @@
                         :files (:defaults "lib" "slynk" "contrib" "doc/images"
                                           (:exclude "sly-autoloads.el") "sly-pkg.el")
                         :host github :repo "joaotavora/sly"))
+
+(straight-use-package '(sly-macrostep
+                        :type git
+                        :flavor melpa
+                        :files (:defaults "*.lisp" "*.asd" "sly-macrostep-pkg.el")
+                        :host github
+                        :repo "joaotavora/sly-macrostep"))
+
+(straight-use-package '(sly-repl-ansi-color
+                        :type git
+                        :flavor melpa
+                        :host github
+                        :repo "PuercoPop/sly-repl-ansi-color"))
+
 ;; use roswell's sbcl as the default lisp
 (setq inferior-lisp-program "ros run -- --dynamic-space-size 8192")
 
@@ -140,6 +150,7 @@
 ;; org roam keybindings
 (setq org-roam-directory (file-truename "~/org/roam"))
 (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+(setq org-roam-dailies-directory "daily")
 (org-roam-db-autosync-mode)
 
 
@@ -234,11 +245,28 @@
 
 
 ;; Perspectives
-(straight-use-package '(persp-mode
+(straight-use-package '(perspective
                         :type git
                         :flavor melpa
                         :host github
-                        :repo "Bad-ptr/persp-mode.el"))
+                        :repo "nex3/perspective-el"))
+(global-set-key (kbd "C-c p") 'my-perspectives)
+(defalias 'my-perspectives
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "s") 'persp-switch)
+    (define-key map (kbd "k") 'persp-kill-buffer*)
+    (define-key map (kbd "b") 'persp-ivy-switch-buffer)
+    (define-key map (kbd "n") 'persp-next)
+    (define-key map (kbd "p") 'persp-prev)
+    (define-key map (kbd "a") 'persp-add-buffer)
+    (define-key map (kbd "A") 'persp-set-buffer)
+    (define-key map (kbd "c") 'persp-kill)
+    (define-key map (kbd "r") 'persp-remove-buffer)
+    map))
+
+(global-set-key (kbd "C-x b") 'persp-ivy-switch-buffer)
+(global-set-key (kbd "C-x C-b") 'persp-ibuffer)
+
 (persp-mode)
 
 ;; provide 
